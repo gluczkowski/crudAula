@@ -1,6 +1,7 @@
 package com.crudExemplo.crudExemplo.domain.pessoa;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,25 @@ public class PessoaService {
     public void apagarPessoa(PessoaDTO dto){
         Pessoa pessoa = converter(dto);
         repository.deleteById(pessoa.getId());
+    }
+
+    public void atualizarPessoa(PessoaDTO dto){
+        Pessoa pessoa = repository.findById(dto.getId()).get();
+        Endereco endereco = enderecoRepository.findById(dto.getEndereco().getId()).get();
+
+        pessoa.setNome(dto.getNome());
+        pessoa.setUltimoNome(dto.getUltimoNome());
+        pessoa.setCpf(dto.getCpf());
+        pessoa.setDataNascimento(dto.getDataNascimento());
+
+        endereco.setDescricaoBairro(dto.getEndereco().getDescricaoBairro());
+        endereco.setDescricaoCep(dto.getEndereco().getDescricaoCep());
+        endereco.setDescricaoCidade(dto.getEndereco().getDescricaoCidade());
+        endereco.setDescricaoEstado(dto.getEndereco().getDescricaoEstado());
+        endereco.setDescricaoRua(dto.getEndereco().getDescricaoRua());
+        endereco.setNumero(dto.getEndereco().getNumero());
+
+        repository.save(pessoa);
     }
 
 }

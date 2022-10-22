@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,18 +23,22 @@ public class PessoaController {
         pessoaService.novaPessoa(dto);
         return "Pessoa criada com suceso!";
     } 
-
-    // visão, tipo de retorno , nome do método , parametro;
+    
     @GetMapping
     public List<Pessoa> listAll(){        
         List<Pessoa> pessoas = pessoaService.listAll();
         return pessoas;
     }
-    
 
     @DeleteMapping
     public String apagarPessoa(@RequestBody PessoaDTO dto){
         pessoaService.apagarPessoa(dto);
         return "Pessoa deletada com sucesso";
+    }    
+
+    @PatchMapping   
+    public String atualizarPessoa(@RequestBody PessoaDTO dto){
+        pessoaService.atualizarPessoa(dto);
+        return "Pessoa atualizada com sucesso";
     }
 }
